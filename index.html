@@ -1,46 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>JavaScript</title>
+
+	<!-- Подключение normalize.css -->
+	<link rel="stylesheet" href="/css/normalize.css">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />	<!-- Подключение пользовательских стилей -->
+	<link rel="stylesheet" href="/css/styles.css">
+  
 </head>
+
 <body>
-<h1 class="title">Форматирование страницы</h1>
-    <form name="settings" class="form-settings" action="#" method="get">
-        <fieldset>
-            <legend>Основные настройки</legend>
 
-            <input id="radioDefault" type="radio" name="radioSettings" checked>
-            <label for="radioDefault">по умолчанию</label>
+	<h1 class="title">Форматирование страницы</h1>
+	<form name="settings" class="form-settings" action="#" method="get">
+		<fieldset>
+			<legend>Основные настройки</legend>
 
-            <input id="radioCustom" type="radio" name="radioSettings">
-            <label for="radioCustom">пользовательские</label>
-        </fieldset>
+			<input id="radioDefault" type="radio" name="radioSettings" checked>
+			<label for="radioDefault">по умолчанию</label>
 
-        <fieldset class="hidden">
-            <legend>Пользовательские настройки</legend>
+			<input id="radioCustom" type="radio" name="radioSettings">
+			<label for="radioCustom">пользовательские</label>
+		</fieldset>
 
-            <input id="chkBorder" type="checkbox">
-            <label for="chkBorder">Добавить границу</label>
+		<fieldset class="custom-settings animate__animated hidden">
+			<legend>Пользовательские настройки</legend>
 
-            <input id="chkShadow" type="checkbox">
-            <label for="chkShadow">Добавить тень</label>
+			<input id="chkBorder" type="checkbox">
+			<label for="chkBorder">Добавить границу</label>
 
-            <div class="settings-random">
-                <input id="chkText" type="checkbox">
-                <label for="chkText">Добавить случайный абзац</label>
-            </div>
+			<input id="chkShadow" type="checkbox">
+			<label for="chkShadow">Добавить тень</label>
 
-            <div>
-                <label for="countP">Кол-во абзацев:</label>
-                <input id="countP" type="number" value="1" min="1" max="5" step="1" disabled>
-            </div>
-        </fieldset>
-        <button class="btn-formatted" id="btnFormatted" name="btnFormatted" type="button">Форматировать</button>
-    </form>
-    <script src="script.js"></script>
+			<div class="settings-random">
+				<input id="chkText" type="checkbox">
+				<label for="chkText">Добавить случайный абзац</label>
+			</div>
+
+			<div>
+				<label for="countP">Кол-во абзацев:</label>
+				<input id="countP" type="number" value="1" min="1" max="5" step="1" disabled>
+			</div>
+		</fieldset>
+		<button class="btn btn-formatted" id="btnFormatted" name="btnFormatted" type="button">Форматировать</button>
+		<button class="btn btn-clear" id="btnClear" name="btnClear" type="button">Сбросить</button>
+	</form>
+
+	<script src="js/script.js"></script>
+	<!-- <script src="js/tasks.js"></script> -->
 </body>
+
 </html>
