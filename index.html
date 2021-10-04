@@ -1,77 +1,59 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>JavaScript</title>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Подключение normalize.css -->
-    <link rel="stylesheet" href="css/normalize.css" />
-    <!-- Подключение Animate.css -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <!-- Подключение пользовательских стилей -->
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
+	<title>JavaScript</title>
 
-  <body>
-    <h1 class="title">Форматирование страницы</h1>
-    <form name="settings" class="form-settings" action="#" method="get">
-      <fieldset>
-        <legend>Основные настройки</legend>
+	<!-- Подключение normalize.css -->
+	<link rel="stylesheet" href="css/normalize.css">
+	<!-- Подключение Animate.css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<!-- Подключение пользовательских стилей -->
+	<link rel="stylesheet" href="css/style.css">
+</head>
 
-        <input id="radioDefault" type="radio" name="radioSettings" checked />
-        <label for="radioDefault">по умолчанию</label>
+<body>
 
-        <input id="radioCustom" type="radio" name="radioSettings" />
-        <label for="radioCustom">пользовательские</label>
-      </fieldset>
+	<h1 class="title">Форматирование страницы</h1>
+	<form name="settings" class="form-settings" action="#" method="get">
+		<fieldset>
+			<legend>Основные настройки</legend>
 
-      <fieldset class="custom-settings animate__animated hidden">
-        <legend>Пользовательские настройки</legend>
+			<input id="radioDefault" type="radio" name="radioSettings" checked>
+			<label for="radioDefault">по умолчанию</label>
 
-        <input id="chkBorder" type="checkbox" />
-        <label for="chkBorder">Добавить границу</label>
+			<input id="radioCustom" type="radio" name="radioSettings">
+			<label for="radioCustom">пользовательские</label>
+		</fieldset>
 
-        <input id="chkShadow" type="checkbox" />
-        <label for="chkShadow">Добавить тень</label>
+		<fieldset class="custom-settings animate__animated hidden">
+			<legend>Пользовательские настройки</legend>
 
-        <div class="settings-random">
-          <input id="chkText" type="checkbox" />
-          <label for="chkText">Добавить случайный абзац</label>
-        </div>
+			<input id="chkBorder" type="checkbox">
+			<label for="chkBorder">Добавить границу</label>
 
-        <div>
-          <label for="countP">Кол-во абзацев:</label>
-          <input
-            id="countP"
-            type="number"
-            value="1"
-            min="1"
-            max="5"
-            step="1"
-            disabled
-          />
-        </div>
-      </fieldset>
-      <button
-        class="btn btn-formatted"
-        id="btnFormatted"
-        name="btnFormatted"
-        type="button"
-      >
-        Форматировать
-      </button>
-      <button class="btn btn-clear" id="btnClear" name="btnClear" type="button">
-        Сбросить
-      </button>
-    </form>
+			<input id="chkShadow" type="checkbox">
+			<label for="chkShadow">Добавить тень</label>
 
-    <script src="js/script.js"></script>
-    <!-- <script src="js/tasks.js"></script> -->
-  </body>
+			<div class="settings-random">
+				<input id="chkText" type="checkbox">
+				<label for="chkText">Добавить случайный абзац</label>
+			</div>
+			<div>
+				<label for="countP">Кол-во абзацев:</label>
+				<input id="countP" type="number" value="1" min="1" max="5" step="1" disabled>
+			</div>
+		</fieldset>
+		<button class="btn btn-formatted" id="btnFormatted" name="btnFormatted" type="button">Форматировать</button>
+		<button class="btn btn-clear" id="btnClear" name="btnClear" type="button">Сбросить</button>
+	</form>
+
+	<script src="js/script.js"></script>
+	<!-- <script src="js/tasks.js"></script> -->
+</body>
+
 </html>

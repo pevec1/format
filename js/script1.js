@@ -20,44 +20,38 @@ let customSettings = document.querySelector(".custom-settings");
 let checkboxes = formSettings.querySelectorAll("[type='checkbox']");
 let countP = document.getElementById("countP");
 
-let userText; //поле с пользовательским текстом
-
 for (let i = 0; i < checkboxes.length; i++) {
-  checkboxes[i].addEventListener("change", () => {
-    if (i == 0) {
-      if (checkboxes[0].checked) {
-        body.style.border = "10px solid darkblue";
-      } else {
-        body.style.border = "none";
-      }
-    }
+	checkboxes[i].addEventListener("change", () => {
+		if (i == 0) {
+			if (checkboxes[0].checked) {
+				body.style.border = "10px solid darkblue";
+			} else {
+				body.style.border = "none";
+			}
+		}
 
-    if (i == 1) {
-      if (checkboxes[1].checked) {
-        body.style.boxShadow = "inset 0 0 20px 10px gray";
-      } else {
-        body.style.boxShadow = "none";
-      }
-    }
+		if (i == 1) {
+			if (checkboxes[1].checked) {
+				body.style.boxShadow = "inset 0 0 20px 10px gray";
+			} else {
+				body.style.boxShadow = "none";
+			}
+		}
 
-    if (i == 2) {
-      if (checkboxes[2].checked) {
-        countP.removeAttribute("disabled");
+		if (i == 2) {
+			if (checkboxes[2].checked) {
+				countP.removeAttribute("disabled");
 
-        if (!document.querySelector(".user-text")) {
-          userText = document.createElement("textarea");
-          userText.classList.add("user-text");
-          userText.setAttribute("maxlength", "1000");
-          customSettings.append(userText);
-          userText.addEventListener("input", getTextLength);
-        }
-      } else {
-        countP.setAttribute("disabled", "disabled");
-        document.querySelector(".user-text").remove();
-      }
-    }
-  });
+				// let userText = document.createElement("textarea");
+
+
+			} else {
+				countP.setAttribute("disabled", "disabled");
+			}
+		}
+	});
 }
+
 //Обработчики события "click" на кнопки "Форматировать" и "Очистить"
 btnFormatted.addEventListener("click", formattedPage);
 btnClear.addEventListener("click", clearFormatted);
@@ -80,19 +74,6 @@ radioDefault.addEventListener("change", () => {
 //Обработчик события "change" при выборе радиопереключ. "польз. настр."
 radioCustom.addEventListener("change", showCustomSettings);
 
-//Функция вывода длины текста в поле
-function getTextLength() {
-    let span;
-    let textLength = userText.value.length;
-
-    if (!document.querySelector("span")) {
-        span = document.createElement("span");
-        span.textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-        userText.insertAdjacentElement("afterend", span);
-    } else {
-        document.querySelector("span").textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-    }
-}
 //Функция форматирования страницы "по умолчанию"
 function formattedPage(border, shadow) {
 	let p;
@@ -113,7 +94,7 @@ function formattedPage(border, shadow) {
 
 		for (let i = 0; i < numP; i++) {
 			p = document.createElement("p");
-			p.textContent = userText.value;
+			p.textContent = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus dicta rem atque vitae illo, exercitationem impedit fuga adipisci. Nostrum, officiis consequatur. Soluta optio commodi sed repellat, perspiciatis cumque expedita aliquid.";
 
 			document.querySelector(".added").append(p);
 
