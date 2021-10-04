@@ -23,41 +23,43 @@ let countP = document.getElementById("countP");
 let userText; //поле с пользовательским текстом
 
 for (let i = 0; i < checkboxes.length; i++) {
-  checkboxes[i].addEventListener("change", () => {
-    if (i == 0) {
-      if (checkboxes[0].checked) {
-        body.style.border = "10px solid darkblue";
-      } else {
-        body.style.border = "none";
-      }
-    }
+	checkboxes[i].addEventListener("change", () => {
+		if (i == 0) {
+			if (checkboxes[0].checked) {
+				body.style.border = "10px solid darkblue";
+			} else {
+				body.style.border = "none";
+			}
+		}
 
-    if (i == 1) {
-      if (checkboxes[1].checked) {
-        body.style.boxShadow = "inset 0 0 20px 10px gray";
-      } else {
-        body.style.boxShadow = "none";
-      }
-    }
+		if (i == 1) {
+			if (checkboxes[1].checked) {
+				body.style.boxShadow = "inset 0 0 20px 10px gray";
+			} else {
+				body.style.boxShadow = "none";
+			}
+		}
 
-    if (i == 2) {
-      if (checkboxes[2].checked) {
-        countP.removeAttribute("disabled");
+		if (i == 2) {
+			if (checkboxes[2].checked) {
+				countP.removeAttribute("disabled");
 
-        if (!document.querySelector(".user-text")) {
-          userText = document.createElement("textarea");
-          userText.classList.add("user-text");
-          userText.setAttribute("maxlength", "1000");
-          customSettings.append(userText);
-          userText.addEventListener("input", getTextLength);
-        }
-      } else {
-        countP.setAttribute("disabled", "disabled");
-        document.querySelector(".user-text").remove();
-      }
-    }
-  });
+				if (!document.querySelector(".user-text")) {
+					userText = document.createElement("textarea");
+					userText.classList.add("user-text");
+					userText.setAttribute("maxlength", "1000");
+					customSettings.append(userText);
+
+					userText.addEventListener("input", getTextLength);
+				}
+			} else {
+				countP.setAttribute("disabled", "disabled");
+				document.querySelector(".user-text").remove();
+			}
+		}
+	});
 }
+
 //Обработчики события "click" на кнопки "Форматировать" и "Очистить"
 btnFormatted.addEventListener("click", formattedPage);
 btnClear.addEventListener("click", clearFormatted);
@@ -82,17 +84,19 @@ radioCustom.addEventListener("change", showCustomSettings);
 
 //Функция вывода длины текста в поле
 function getTextLength() {
-    let span;
-    let textLength = userText.value.length;
+	let span;
+	let textLength = userText.value.length;
 
-    if (!document.querySelector("span")) {
-        span = document.createElement("span");
-        span.textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-        userText.insertAdjacentElement("afterend", span);
-    } else {
-        document.querySelector("span").textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-    }
+	if (!document.querySelector("span")) {
+		span = document.createElement("span");
+		span.classList.add("info-length");
+		span.textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
+		userText.insertAdjacentElement("afterend", span);
+	} else {
+		document.querySelector("span").textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
+	}
 }
+
 //Функция форматирования страницы "по умолчанию"
 function formattedPage(border, shadow) {
 	let p;
@@ -103,30 +107,24 @@ function formattedPage(border, shadow) {
 		let numP = countP.value;
 		let div;
 
-		if (document.querySelector(".added")) {
-			document.querySelector(".added").innerHTML = "";
+		if (userText.value.length > 100) {
+			if (document.querySelector(".added")) {
+				document.querySelector(".added").innerHTML = "";
+			} else {
+				div = document.createElement("div");
+				div.classList.add("added");
+				formSettings.insertAdjacentElement("afterend", div);
+			}
+
+			for (let i = 0; i < numP; i++) {
+				p = document.createElement("p");
+				p.textContent = userText.value;
+				document.querySelector(".added").append(p);
+			}
 		} else {
-			div = document.createElement("div");
-			div.classList.add("added");
-			formSettings.insertAdjacentElement("afterend", div);
-		}
-
-		for (let i = 0; i < numP; i++) {
-			p = document.createElement("p");
-			p.textContent = userText.value;
-
-			document.querySelector(".added").append(p);
-
-			//"beforebegin" - перед элементом
-			//"afterend" - после элемента
-			//"beforeend" - внутри элемента в начале (схож с prepend)
-			//"afterbegin" - внутри элемента в конце (схож с append)
-
-
-			// body.append(p);
-			// formSettings.append(p);
-			// formSettings.insertAdjacentHTML("afterend", "<img src='https://picsum.photos/200/300'>");
-			// formSettings.insertAdjacentText("afterend", "Тест!");	
+			userText.style.borderColor = "red";
+			// document.querySelector(".user-text").autofocus = true;
+			// document.querySelector(".user-text").setAttribute("autofocus", "autofocus");
 		}
 	}
 }
@@ -139,6 +137,9 @@ function clearFormatted() {
 
 	if (document.querySelector(".added")) {
 		document.querySelector(".added").remove();
+	}
+	if (document.querySelector(".user-text")) {
+		document.querySelector(".user-text").remove();
 	}
 
 	body.style.boxShadow = "none";
