@@ -23,43 +23,48 @@ let countP = document.getElementById("countP");
 let userText; //поле с пользовательским текстом
 
 for (let i = 0; i < checkboxes.length; i++) {
-	checkboxes[i].addEventListener("change", () => {
-		if (i == 0) {
-			if (checkboxes[0].checked) {
-				body.style.border = "10px solid darkblue";
-			} else {
-				body.style.border = "none";
-			}
-		}
+  checkboxes[i].addEventListener("change", () => {
+    if (i == 0) {
+      if (checkboxes[0].checked) {
+        body.style.border = "10px solid darkblue";
+      } else {
+        body.style.border = "none";
+      }
+    }
 
-		if (i == 1) {
-			if (checkboxes[1].checked) {
-				body.style.boxShadow = "inset 0 0 20px 10px gray";
-			} else {
-				body.style.boxShadow = "none";
-			}
-		}
+    if (i == 1) {
+      if (checkboxes[1].checked) {
+        body.style.boxShadow = "inset 0 0 20px 10px gray";
+      } else {
+        body.style.boxShadow = "none";
+      }
+    }
 
-		if (i == 2) {
-			if (checkboxes[2].checked) {
-				countP.removeAttribute("disabled");
+    if (i == 2) {
+      if (checkboxes[2].checked) {
+        countP.removeAttribute("disabled");
 
-				if (!document.querySelector(".user-text")) {
-					userText = document.createElement("textarea");
-					userText.classList.add("user-text");
-					userText.setAttribute("maxlength", "1000");
-					customSettings.append(userText);
+        if (!document.querySelector(".text-container")) {
+          let div = document.createElement("div");
+          div.classList.add("text-container");
 
-					userText.addEventListener("input", getTextLength);
-				}
-			} else {
-				countP.setAttribute("disabled", "disabled");
-				document.querySelector(".user-text").remove();
-			}
-		}
-	});
+          userText = document.createElement("textarea");
+          userText.classList.add("user-text");
+          userText.setAttribute("maxlength", "1000");
+
+          div.append(userText);
+          customSettings.append(div);
+
+          userText.focus();
+          userText.addEventListener("input", getTextLength);
+        }
+      } else {
+        countP.setAttribute("disabled", "disabled");
+        document.querySelector(".text-container").remove();
+      }
+    }
+  });
 }
-
 //Обработчики события "click" на кнопки "Форматировать" и "Очистить"
 btnFormatted.addEventListener("click", formattedPage);
 btnClear.addEventListener("click", clearFormatted);
@@ -84,77 +89,95 @@ radioCustom.addEventListener("change", showCustomSettings);
 
 //Функция вывода длины текста в поле
 function getTextLength() {
-	let span;
-	let textLength = userText.value.length;
+    let span;
+    let error;
+    let textLength = userText.value.length;
 
-	if (!document.querySelector("span")) {
-		span = document.createElement("span");
-		span.classList.add("info-length");
-		span.textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-		userText.insertAdjacentElement("afterend", span);
-	} else {
-		document.querySelector("span").textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
-	}
+    if (textLength < 100) {
+        userText.style.outlineColor = "red";
+
+        if (!document.querySelector(".error")) {
+            error = document.createElement("b");
+            error.textContent = "В поле недостаточно символов (< 100)!";
+            error.classList.add("error");
+            userText.insertAdjacentElement("beforebegin", error);
+        } else {
+            document.querySelector(".error").textContent = "В поле недостаточно символов (< 100)!";
+        }
+    } else {
+        if (document.querySelector(".error")) {
+            document.querySelector(".error").remove();
+        }
+        userText.style.outlineColor = "rgb(204, 204, 125)";
+    }
+
+    if (!document.querySelector("span")) {
+        span = document.createElement("span");
+        span.classList.add("info-length");
+        span.textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
+        userText.insertAdjacentElement("afterend", span);
+    } else {
+        document.querySelector("span").textContent = textLength + ` / ${userText.getAttribute("maxlength")}`;
+    }
 }
 
-//Функция форматирования страницы "по умолчанию"
+//Функция форматирования страницы
 function formattedPage(border, shadow) {
-	let p;
+  let p;
 
-	body.classList.add("page-default");
+  body.classList.add("page-default");
 
-	if (checkboxes[2].checked) {
-		let numP = countP.value;
-		let div;
+  if (checkboxes[2].checked) {
+    let numP = countP.value;
+    let div;
 
-		if (userText.value.length > 100) {
-			if (document.querySelector(".added")) {
-				document.querySelector(".added").innerHTML = "";
-			} else {
-				div = document.createElement("div");
-				div.classList.add("added");
-				formSettings.insertAdjacentElement("afterend", div);
-			}
+    if (userText.value.length >= 100) {
+      if (document.querySelector(".added")) {
+        document.querySelector(".added").innerHTML = "";
+      } else {
+        div = document.createElement("div");
+        div.classList.add("added");
+        formSettings.insertAdjacentElement("afterend", div);
+      }
 
-			for (let i = 0; i < numP; i++) {
-				p = document.createElement("p");
-				p.textContent = userText.value;
-				document.querySelector(".added").append(p);
-			}
-		} else {
-			userText.style.borderColor = "red";
-			// document.querySelector(".user-text").autofocus = true;
-			// document.querySelector(".user-text").setAttribute("autofocus", "autofocus");
-		}
-	}
+      createP(numP);
+    }
+  }
 }
-
+//Функция создания абзацев (p) в контейнере с классом .added
+function createP(numP) {
+    for (let i = 0; i < numP; i++) {
+        p = document.createElement("p");
+        p.textContent = userText.value;
+        document.querySelector(".added").append(p);
+    }
+}
 //Функция сброса форматирования
 function clearFormatted() {
-	if (body.classList.contains("page-default")) {
-		body.classList.remove("page-default");
-	}
+    if (body.classList.contains("page-default")) {
+        body.classList.remove("page-default");
+    }
 
-	if (document.querySelector(".added")) {
-		document.querySelector(".added").remove();
-	}
-	if (document.querySelector(".user-text")) {
-		document.querySelector(".user-text").remove();
-	}
+    if (document.querySelector(".added")) {
+        document.querySelector(".added").remove();
+    }
 
-	body.style.boxShadow = "none";
-	body.style.border = "none";
+    if (document.querySelector(".text-container")) {
+        document.querySelector(".text-container").remove();
+    }
 
-	for (let i = 0; i < checkboxes.length; i++) {
-		checkboxes[i].checked = false;
-	}
+    body.style.boxShadow = "none";
+    body.style.border = "none";
 
-	if (countP.value != 1) {
-		countP.value = 1;
-	}
-	countP.setAttribute("disabled", "disabled");
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+    }
+
+    if (countP.value != 1) {
+        countP.value = 1;
+    }
+    countP.setAttribute("disabled", "disabled");
 }
-
 //Функция отображения области с польз. настр.
 function showCustomSettings() {
 	customSettings.classList.remove("hidden");
